@@ -4,6 +4,7 @@ import { ArrowRight, Code2, Lock, Zap, Github, ExternalLink, ChevronRight } from
 export default function VoiceRAGMarketing() {
   const [latency, setLatency] = useState(84);
   const [throughput, setThroughput] = useState(24);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,6 +19,12 @@ export default function VoiceRAGMarketing() {
     }, 1500);
     return () => clearInterval(interval);
   }, []);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setFormSubmitted(true);
+    setTimeout(() => setFormSubmitted(false), 5000);
+  };
 
   return (
     <div className="bg-black text-white font-sans antialiased">
@@ -61,7 +68,7 @@ export default function VoiceRAGMarketing() {
               </p>
             </div>
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-4 pt-4 flex-wrap">
               <button className="px-6 py-3 bg-white text-black font-semibold text-sm hover:bg-slate-100 transition-all duration-200 border border-white flex items-center gap-2">
                 Get API Key
                 <ArrowRight size={16} />
@@ -428,6 +435,59 @@ export default function VoiceRAGMarketing() {
               View on GitHub
             </button>
           </div>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section className="py-24 px-6 border-b border-neutral-800">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-bold">Get Early Access</h2>
+            <p className="text-slate-400">Join the next wave of voice infrastructure innovation.</p>
+          </div>
+
+          {!formSubmitted ? (
+            <form onSubmit={handleFormSubmit} className="space-y-6 bg-neutral-950 border border-neutral-800 p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  className="px-4 py-3 bg-neutral-900 border border-neutral-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  className="px-4 py-3 bg-neutral-900 border border-neutral-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
+                  required
+                />
+              </div>
+              <input
+                type="email"
+                placeholder="Work Email"
+                className="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Company"
+                className="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-colors"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full px-6 py-3 bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-all duration-200"
+              >
+                Request Early Access
+              </button>
+            </form>
+          ) : (
+            <div className="bg-neutral-950 border border-green-500/50 p-8 text-center space-y-2">
+              <div className="text-2xl text-green-500">✓</div>
+              <p className="text-white font-semibold">Thanks for signing up!</p>
+              <p className="text-slate-400 text-sm">We'll contact you soon with next steps.</p>
+            </div>
+          )}
         </div>
       </section>
 
